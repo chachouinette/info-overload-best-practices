@@ -1,5 +1,3 @@
-
-
 import React, { useState, useEffect } from 'react';
 import { bestPractices } from '../data/bestPractices';
 
@@ -53,7 +51,7 @@ function BestPracticeList({ onSelectPractice, selectedPractices }) {
 
   return (
     <div>
-      <div style={{marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap'}}>
+      <div style={{marginBottom: '16px', display: 'flex', alignItems: 'center', gap: '16px', flexWrap: 'wrap', justifyContent: 'center', textAlign: 'center'}}>
         <div>
           <label htmlFor="type-filter">Filtrer par type : </label>
           <select id="type-filter" value={filter} onChange={e => setFilter(e.target.value)}>
@@ -84,23 +82,52 @@ function BestPracticeList({ onSelectPractice, selectedPractices }) {
         ) : (
           paginatedPractices.map((practice, idx) => {
             const globalIdx = (page - 1) * pageSize + idx;
+            const isFavorite = favorites.includes(globalIdx);
             const isSelected = selectedPractices && selectedPractices.includes(globalIdx);
             return (
-              <div key={globalIdx} style={{border: '1px solid #ccc', borderRadius: '8px', background: isSelected ? '#ffe066' : '#f9f9f9', padding: '16px', position: 'relative'}}>
+              <div
+                key={globalIdx}
+                style={{
+                  border: isFavorite ? '2px solid #ffcc00' : '1px solid #ccc',
+                  borderRadius: '8px',
+                  background: isSelected ? '#ffe066' : isFavorite ? '#fff8e1' : '#f9f9f9',
+                  padding: '16px',
+                  position: 'relative',
+                }}
+              >
                 <h2 style={{fontSize: '1.1em', marginBottom: '8px'}}>{practice.title}</h2>
                 {practice.description && <p style={{fontSize: '1em'}}>{practice.description}</p>}
-                <button
-                  className="favorite-btn"
+                <span
+                  className="favorite-star"
                   onClick={() => handleToggleFavorite(globalIdx)}
-                  aria-label={favorites.includes(globalIdx) ? 'Retirer des favoris' : 'Ajouter aux favoris'}
+                  aria-label={isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
+                  style={{
+                    cursor: 'pointer',
+                    fontSize: '1.5em',
+                    color: isFavorite ? '#ffcc00' : '#ccc',
+                    position: 'absolute',
+                    top: 8,
+                    right: 8,
+                  }}
                 >
-                  {favorites.includes(globalIdx) ? '★' : '☆'}
-                </button>
+                  {isFavorite ? '★' : '☆'}
+                </span>
                 <span style={{fontSize: '0.9em', color: '#555', fontStyle: 'italic', marginTop: 8, display: 'block'}}>{practice.type}</span>
                 {onSelectPractice && (
                   <button
                     onClick={() => onSelectPractice(globalIdx)}
-                    style={{position: 'absolute', bottom: 36, right: 8, background: isSelected ? '#003366' : '#e3eaf3', color: isSelected ? '#fff' : '#003366', border: 'none', borderRadius: '6px', padding: '4px 10px', fontSize: '0.95em', cursor: 'pointer'}}
+                    style={{
+                      position: 'absolute',
+                      bottom: 36,
+                      right: 8,
+                      background: isSelected ? '#003366' : '#e3eaf3',
+                      color: isSelected ? '#fff' : '#003366',
+                      border: 'none',
+                      borderRadius: '6px',
+                      padding: '4px 10px',
+                      fontSize: '0.95em',
+                      cursor: 'pointer',
+                    }}
                     aria-label={isSelected ? 'Retirer de mes pratiques' : 'Ajouter à mes pratiques'}
                     disabled={selectedPractices && selectedPractices.length >= 3 && !isSelected}
                   >
