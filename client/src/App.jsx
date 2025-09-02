@@ -4,12 +4,30 @@ import './App.css';
 import BestPracticeList from './components/BestPracticeList';
 
 
-import { useState } from 'react';
-import { bestPractices } from './data/bestPractices';
+import { useState, useEffect } from 'react';
 
 function App() {
   const [myPractices, setMyPractices] = useState([]);
   const [adoptedPractices, setAdoptedPractices] = useState([]);
+  const [bestPractices, setBestPractices] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch('http://localhost:8080/api/best-practices')
+      .then(res => {
+        if (!res.ok) throw new Error('Erreur lors du chargement des données');
+        return res.json();
+      })
+      .then(data => {
+        setBestPractices(data);
+        setLoading(false);
+      })
+      .catch(err => {
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
 
   // Ajoute ou retire une pratique de la sélection (max 3)
   const togglePractice = idx => {
@@ -33,6 +51,12 @@ function App() {
     setAdoptedPractices(prev => prev.filter(i => i !== idx));
   };
 
+  if (loading) {
+    return <div>Chargement des bonnes pratiques...</div>;
+  }
+  if (error) {
+    return <div style={{color: 'red'}}>Erreur : {error}</div>;
+  }
   return (
     <div>
       <h1>Bonnes pratiques contre l'infobésité</h1>
@@ -99,7 +123,7 @@ function App() {
           )}
         </div>
       </div>
-      <BestPracticeList onSelectPractice={togglePractice} selectedPractices={myPractices} />
+      <BestPracticeList onSelectPractice={togglePractice} selectedPractices={myPractices} bestPractices={bestPractices} />
     </div>
   );
 }

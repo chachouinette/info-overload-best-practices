@@ -1,14 +1,17 @@
 const express = require('express');
 const cors = require('cors');
+const { bestPractices } = require('../bestPractices');
+
 const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 8080;
 
 app.use(cors());
 
-app.get('/api/message', (req, res) => {
-  res.json({ message: 'Hello from Node.js!' });
+// GET /api/best-practices : retourne toutes les bonnes pratiques
+app.get('/api/best-practices', (req, res) => {
+  res.json(bestPractices);
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`API listening on http://localhost:${PORT}`);
 });

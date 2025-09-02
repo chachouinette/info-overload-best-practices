@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { bestPractices } from '../data/bestPractices';
 
 
-function BestPracticeList({ onSelectPractice, selectedPractices }) {
+
+function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices = [] }) {
   const [filter, setFilter] = useState('');
   const [search, setSearch] = useState('');
   const [favorites, setFavorites] = useState(() => {
