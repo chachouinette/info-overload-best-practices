@@ -7,8 +7,14 @@ import BestPracticeList from './components/BestPracticeList';
 import { useState, useEffect } from 'react';
 
 function App() {
-  const [myPractices, setMyPractices] = useState([]);
-  const [adoptedPractices, setAdoptedPractices] = useState([]);
+  const [myPractices, setMyPractices] = useState(() => {
+    const saved = localStorage.getItem('myPractices');
+    return saved ? JSON.parse(saved) : [];
+  });
+  const [adoptedPractices, setAdoptedPractices] = useState(() => {
+    const saved = localStorage.getItem('adoptedPractices');
+    return saved ? JSON.parse(saved) : [];
+  });
   const [bestPractices, setBestPractices] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -32,23 +38,38 @@ function App() {
   // Ajoute ou retire une pratique de la sélection (max 3)
   const togglePractice = idx => {
     setMyPractices(practices => {
+      let updated;
       if (practices.includes(idx)) {
-        return practices.filter(i => i !== idx);
+        updated = practices.filter(i => i !== idx);
       } else if (practices.length < 3) {
-        return [...practices, idx];
+        updated = [...practices, idx];
       } else {
-        return practices;
+        updated = practices;
       }
+      localStorage.setItem('myPractices', JSON.stringify(updated));
+      return updated;
     });
   };
 
   // Déplacer une pratique adoptée
   const adoptPractice = idx => {
-    setAdoptedPractices(prev => prev.includes(idx) ? prev : [...prev, idx]);
-    setMyPractices(prev => prev.filter(i => i !== idx));
+    setAdoptedPractices(prev => {
+      const updated = prev.includes(idx) ? prev : [...prev, idx];
+      localStorage.setItem('adoptedPractices', JSON.stringify(updated));
+      return updated;
+    });
+    setMyPractices(prev => {
+      const updated = prev.filter(i => i !== idx);
+      localStorage.setItem('myPractices', JSON.stringify(updated));
+      return updated;
+    });
   };
   const removeAdopted = idx => {
-    setAdoptedPractices(prev => prev.filter(i => i !== idx));
+    setAdoptedPractices(prev => {
+      const updated = prev.filter(i => i !== idx);
+      localStorage.setItem('adoptedPractices', JSON.stringify(updated));
+      return updated;
+    });
   };
 
   if (loading) {
@@ -81,17 +102,22 @@ function App() {
           flex: '1 1 340px',
           boxShadow: '0 2px 8px rgba(0,51,102,0.07)'
         }}>
-          <h2 style={{color: '#003366', marginTop: 0}}>📝 Mes 3 pratiques à mettre en place</h2>
+          <h2 style={{color: '#003366', marginTop: 0}}>📝 Mes 3 pratiques à adopter</h2>
           {myPractices.length === 0 ? (
             <div style={{color: '#666', fontStyle: 'italic'}}>Sélectionnez jusqu'à 3 pratiques à retenir dans la liste ci-dessous.</div>
           ) : (
             <ol style={{paddingLeft: 20}}>
               {myPractices.map(idx => (
-                <li key={idx} style={{marginBottom: 8, display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                  <span>{bestPractices[idx]?.description || ''}</span>
-                  <span>
-                    <button onClick={() => adoptPractice(idx)} style={{marginLeft: 8, fontSize: '0.9em', color: '#008000', background: 'none', border: 'none', cursor: 'pointer'}} title="Adopter">✔️</button>
-                    <button onClick={() => togglePractice(idx)} style={{marginLeft: 4, fontSize: '0.9em', color: '#003366', background: 'none', border: 'none', cursor: 'pointer'}} title="Retirer">✕</button>
+                <li key={idx} style={{
+                  marginBottom: 8,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}>
+                  <span style={{flex: 1}}>{bestPractices[idx]?.description || ''}</span>
+                  <span style={{display: 'flex', gap: 8, marginLeft: 'auto'}}>
+                    <button onClick={() => adoptPractice(idx)} style={{fontSize: '0.9em', color: '#008000', background: 'none', border: 'none', cursor: 'pointer'}} title="Adopter">✔️</button>
+                    <button onClick={() => togglePractice(idx)} style={{fontSize: '0.9em', color: '#003366', background: 'none', border: 'none', cursor: 'pointer'}} title="Retirer">✕</button>
                   </span>
                 </li>
               ))}
@@ -123,7 +149,14 @@ function App() {
           )}
         </div>
       </div>
-      <BestPracticeList onSelectPractice={togglePractice} selectedPractices={myPractices} bestPractices={bestPractices} />
+      <BestPracticeList
+        onSelectPractice={togglePractice}
+        selectedPractices={myPractices}
+        bestPractices={bestPractices}
+        adoptPractice={adoptPractice}
+        adoptedPractices={adoptedPractices}
+        maxSelected={3}
+      />
     </div>
   );
 }

@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 
 
 
-function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices = [] }) {
+function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices = [], adoptPractice, adoptedPractices = [], maxSelected = 3 }) {
   const [filter, setFilter] = useState('');
   const [search, setSearch] = useState('');
   const [favorites, setFavorites] = useState(() => {
-    const saved = sessionStorage.getItem('favorites');
+    const saved = localStorage.getItem('favorites');
     return saved ? JSON.parse(saved) : [];
   });
   const [showOnlyFavorites, setShowOnlyFavorites] = useState(false);
@@ -28,7 +28,7 @@ function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices =
     : filteredPractices;
 
   useEffect(() => {
-    sessionStorage.setItem('favorites', JSON.stringify(favorites));
+    localStorage.setItem('favorites', JSON.stringify(favorites));
   }, [favorites]);
 
   // Pagination
@@ -84,6 +84,7 @@ function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices =
             const globalIdx = (page - 1) * pageSize + idx;
             const isFavorite = favorites.includes(globalIdx);
             const isSelected = selectedPractices && selectedPractices.includes(globalIdx);
+            const isAdopted = adoptedPractices.includes(globalIdx);
             return (
               <div
                 key={globalIdx}
@@ -113,27 +114,44 @@ function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices =
                   {isFavorite ? '★' : '☆'}
                 </span>
                 <span style={{fontSize: '0.9em', color: '#555', fontStyle: 'italic', marginTop: 8, display: 'block'}}>{practice.type}</span>
-                {onSelectPractice && (
+                <div style={{marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap'}}>
+                  {/* Ajouter à mes 3 pratiques */}
                   <button
                     onClick={() => onSelectPractice(globalIdx)}
+                    disabled={isSelected || selectedPractices.length >= maxSelected || isAdopted}
                     style={{
-                      position: 'absolute',
-                      bottom: 36,
-                      right: 8,
                       background: isSelected ? '#003366' : '#e3eaf3',
                       color: isSelected ? '#fff' : '#003366',
                       border: 'none',
                       borderRadius: '6px',
                       padding: '4px 10px',
                       fontSize: '0.95em',
-                      cursor: 'pointer',
+                      cursor: isSelected || selectedPractices.length >= maxSelected || isAdopted ? 'not-allowed' : 'pointer',
+                      opacity: isSelected || selectedPractices.length >= maxSelected || isAdopted ? 0.6 : 1,
                     }}
-                    aria-label={isSelected ? 'Retirer de mes pratiques' : 'Ajouter à mes pratiques'}
-                    disabled={selectedPractices && selectedPractices.length >= 3 && !isSelected}
+                    aria-label={isSelected ? 'Déjà dans mes pratiques' : 'Ajouter à mes pratiques'}
                   >
-                    {isSelected ? 'Retirer' : 'Ajouter'}
+                    {isSelected ? 'Dans mes 3 pratiques' : isAdopted ? 'Déjà adoptée' : 'Ajouter à mes 3 pratiques'}
                   </button>
-                )}
+                  {/* Adopter */}
+                  <button
+                    onClick={() => adoptPractice(globalIdx)}
+                    disabled={isAdopted}
+                    style={{
+                      background: isAdopted ? '#008000' : '#e3f3e8',
+                      color: isAdopted ? '#fff' : '#008000',
+                      border: 'none',
+                      borderRadius: '6px',
+                      padding: '4px 10px',
+                      fontSize: '0.95em',
+                      cursor: isAdopted ? 'not-allowed' : 'pointer',
+                      opacity: isAdopted ? 0.6 : 1,
+                    }}
+                    aria-label={isAdopted ? 'Déjà adoptée' : 'Adopter'}
+                  >
+                    {isAdopted ? 'Déjà adoptée' : 'Adopter'}
+                  </button>
+                </div>
               </div>
             );
           })
