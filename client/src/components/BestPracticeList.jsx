@@ -1,3 +1,39 @@
+// Icônes SVG par type de bonne pratique
+const typeIcons = {
+  "Gestion des emails": (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#e3eaf3"/><path d="M4 7l8 5 8-5" stroke="#003366" strokeWidth="2" fill="none"/><rect x="4" y="7" width="16" height="10" rx="2" stroke="#003366" strokeWidth="2" fill="none"/></svg>
+  ),
+  "Réactivité et déconnexion": (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#003366" strokeWidth="2" fill="#ffe066"/><path d="M12 6v6l4 2" stroke="#003366" strokeWidth="2" fill="none"/></svg>
+  ),
+  "Congés numériques": (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#e3f3e8"/><path d="M4 18l8-12 8 12" stroke="#008000" strokeWidth="2" fill="none"/></svg>
+  ),
+  "Communication multi-canaux": (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#f9f9f9"/><ellipse cx="12" cy="12" rx="8" ry="5" stroke="#003366" strokeWidth="2" fill="none"/><ellipse cx="12" cy="12" rx="4" ry="2.5" stroke="#003366" strokeWidth="2" fill="none"/></svg>
+  ),
+  "Tchat et messagerie instantanée": (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#fff8e1"/><rect x="5" y="7" width="14" height="8" rx="2" stroke="#ffcc00" strokeWidth="2" fill="none"/><circle cx="8" cy="11" r="1" fill="#ffcc00"/><circle cx="12" cy="11" r="1" fill="#ffcc00"/><circle cx="16" cy="11" r="1" fill="#ffcc00"/></svg>
+  ),
+  "Travail collaboratif sur fichiers": (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#e3eaf3"/><rect x="6" y="7" width="12" height="10" rx="2" stroke="#003366" strokeWidth="2" fill="none"/><path d="M10 11h4" stroke="#003366" strokeWidth="2"/></svg>
+  ),
+  "Réunions : Concentration et disponibilité": (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#008000" strokeWidth="2" fill="#e3f3e8"/><path d="M8 12h8" stroke="#008000" strokeWidth="2"/></svg>
+  ),
+  "Organisation des réunions": (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#ffe066"/><rect x="6" y="7" width="12" height="10" rx="2" stroke="#003366" strokeWidth="2" fill="none"/><path d="M9 11h6" stroke="#003366" strokeWidth="2"/></svg>
+  ),
+  "Lutte contre le multi-tâches": (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#f9f9f9"/><path d="M6 12h12" stroke="#003366" strokeWidth="2"/><path d="M12 6v12" stroke="#003366" strokeWidth="2"/></svg>
+  ),
+  "Management et exemplarité": (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#003366" strokeWidth="2" fill="#e3eaf3"/><rect x="6" y="14" width="12" height="6" rx="3" stroke="#003366" strokeWidth="2" fill="#e3eaf3"/></svg>
+  ),
+  "Pratiques vis-à-vis de l'environnement personnel": (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#e3f3e8"/><path d="M6 18V8l6-4 6 4v10" stroke="#008000" strokeWidth="2" fill="none"/></svg>
+  ),
+};
 import React, { useState, useEffect } from 'react';
 
 
@@ -24,7 +60,7 @@ function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices =
   });
 
   const displayPractices = showOnlyFavorites
-    ? filteredPractices.filter((_, idx) => favorites.includes(idx))
+    ? filteredPractices.filter(p => favorites.includes(p.id))
     : filteredPractices;
 
   useEffect(() => {
@@ -35,9 +71,9 @@ function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices =
   const totalPages = Math.ceil(displayPractices.length / pageSize);
   const paginatedPractices = displayPractices.slice((page - 1) * pageSize, page * pageSize);
 
-  const handleToggleFavorite = idx => {
+  const handleToggleFavorite = id => {
     setFavorites(favs =>
-      favs.includes(idx) ? favs.filter(i => i !== idx) : [...favs, idx]
+      favs.includes(id) ? favs.filter(i => i !== id) : [...favs, id]
     );
   };
 
@@ -80,14 +116,14 @@ function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices =
         {paginatedPractices.length === 0 ? (
           <div style={{color: '#888', fontStyle: 'italic', gridColumn: '1 / -1'}}>Aucune carte à afficher.</div>
         ) : (
-          paginatedPractices.map((practice, idx) => {
-            const globalIdx = (page - 1) * pageSize + idx;
-            const isFavorite = favorites.includes(globalIdx);
-            const isSelected = selectedPractices && selectedPractices.includes(globalIdx);
-            const isAdopted = adoptedPractices.includes(globalIdx);
+          paginatedPractices.map((practice) => {
+            const id = practice.id;
+            const isFavorite = favorites.includes(id);
+            const isSelected = selectedPractices && selectedPractices.includes(id);
+            const isAdopted = adoptedPractices.includes(id);
             return (
               <div
-                key={globalIdx}
+                key={id}
                 style={{
                   border: isFavorite ? '2px solid #ffcc00' : '1px solid #ccc',
                   borderRadius: '8px',
@@ -96,11 +132,14 @@ function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices =
                   position: 'relative',
                 }}
               >
-                <h2 style={{fontSize: '1.1em', marginBottom: '8px'}}>{practice.title}</h2>
+                <div style={{display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8}}>
+                  <span>{typeIcons[practice.type] || null}</span>
+                  <h2 style={{fontSize: '1.1em', margin: 0}}>{practice.title}</h2>
+                </div>
                 {practice.description && <p style={{fontSize: '1em'}}>{practice.description}</p>}
                 <span
                   className="favorite-star"
-                  onClick={() => handleToggleFavorite(globalIdx)}
+                  onClick={() => handleToggleFavorite(id)}
                   aria-label={isFavorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
                   style={{
                     cursor: 'pointer',
@@ -117,7 +156,7 @@ function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices =
                 <div style={{marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap'}}>
                   {/* Ajouter à mes 3 pratiques */}
                   <button
-                    onClick={() => onSelectPractice(globalIdx)}
+                    onClick={() => onSelectPractice(id)}
                     disabled={isSelected || selectedPractices.length >= maxSelected || isAdopted}
                     style={{
                       background: isSelected ? '#003366' : '#e3eaf3',
@@ -135,7 +174,7 @@ function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices =
                   </button>
                   {/* Adopter */}
                   <button
-                    onClick={() => adoptPractice(globalIdx)}
+                    onClick={() => adoptPractice(id)}
                     disabled={isAdopted}
                     style={{
                       background: isAdopted ? '#008000' : '#e3f3e8',

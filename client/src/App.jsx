@@ -36,13 +36,13 @@ function App() {
   }, []);
 
   // Ajoute ou retire une pratique de la sélection (max 3)
-  const togglePractice = idx => {
+  const togglePractice = id => {
     setMyPractices(practices => {
       let updated;
-      if (practices.includes(idx)) {
-        updated = practices.filter(i => i !== idx);
+      if (practices.includes(id)) {
+        updated = practices.filter(i => i !== id);
       } else if (practices.length < 3) {
-        updated = [...practices, idx];
+        updated = [...practices, id];
       } else {
         updated = practices;
       }
@@ -52,21 +52,21 @@ function App() {
   };
 
   // Déplacer une pratique adoptée
-  const adoptPractice = idx => {
+  const adoptPractice = id => {
     setAdoptedPractices(prev => {
-      const updated = prev.includes(idx) ? prev : [...prev, idx];
+      const updated = prev.includes(id) ? prev : [...prev, id];
       localStorage.setItem('adoptedPractices', JSON.stringify(updated));
       return updated;
     });
     setMyPractices(prev => {
-      const updated = prev.filter(i => i !== idx);
+      const updated = prev.filter(i => i !== id);
       localStorage.setItem('myPractices', JSON.stringify(updated));
       return updated;
     });
   };
-  const removeAdopted = idx => {
+  const removeAdopted = id => {
     setAdoptedPractices(prev => {
-      const updated = prev.filter(i => i !== idx);
+      const updated = prev.filter(i => i !== id);
       localStorage.setItem('adoptedPractices', JSON.stringify(updated));
       return updated;
     });
@@ -107,20 +107,24 @@ function App() {
             <div style={{color: '#666', fontStyle: 'italic'}}>Sélectionnez jusqu'à 3 pratiques à retenir dans la liste ci-dessous.</div>
           ) : (
             <ol style={{paddingLeft: 20}}>
-              {myPractices.map(idx => (
-                <li key={idx} style={{
-                  marginBottom: 8,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                }}>
-                  <span style={{flex: 1}}>{bestPractices[idx]?.description || ''}</span>
-                  <span style={{display: 'flex', gap: 8, marginLeft: 'auto'}}>
-                    <button onClick={() => adoptPractice(idx)} style={{fontSize: '0.9em', color: '#008000', background: 'none', border: 'none', cursor: 'pointer'}} title="Adopter">✔️</button>
-                    <button onClick={() => togglePractice(idx)} style={{fontSize: '0.9em', color: '#003366', background: 'none', border: 'none', cursor: 'pointer'}} title="Retirer">✕</button>
-                  </span>
-                </li>
-              ))}
+              {myPractices.map(id => {
+                const practice = bestPractices.find(p => p.id === id);
+                if (!practice) return null;
+                return (
+                  <li key={id} style={{
+                    marginBottom: 8,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                  }}>
+                    <span style={{flex: 1}}>{practice.description || ''}</span>
+                    <span style={{display: 'flex', gap: 8, marginLeft: 'auto'}}>
+                      <button onClick={() => adoptPractice(id)} style={{fontSize: '0.9em', color: '#008000', background: 'none', border: 'none', cursor: 'pointer'}} title="Adopter">✔️</button>
+                      <button onClick={() => togglePractice(id)} style={{fontSize: '0.9em', color: '#003366', background: 'none', border: 'none', cursor: 'pointer'}} title="Retirer">✕</button>
+                    </span>
+                  </li>
+                );
+              })}
             </ol>
           )}
         </div>
@@ -139,12 +143,16 @@ function App() {
             <div style={{color: '#666', fontStyle: 'italic'}}>Aucune pratique adoptée pour le moment.</div>
           ) : (
             <ol style={{paddingLeft: 20}}>
-              {adoptedPractices.map(idx => (
-                <li key={idx} style={{marginBottom: 8, display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                  <span>{bestPractices[idx]?.description || ''}</span>
-                  <button onClick={() => removeAdopted(idx)} style={{marginLeft: 8, fontSize: '0.9em', color: '#008000', background: 'none', border: 'none', cursor: 'pointer'}} title="Retirer">✕</button>
-                </li>
-              ))}
+              {adoptedPractices.map(id => {
+                const practice = bestPractices.find(p => p.id === id);
+                if (!practice) return null;
+                return (
+                  <li key={id} style={{marginBottom: 8, display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                    <span>{practice.description || ''}</span>
+                    <button onClick={() => removeAdopted(id)} style={{marginLeft: 8, fontSize: '0.9em', color: '#008000', background: 'none', border: 'none', cursor: 'pointer'}} title="Retirer">✕</button>
+                  </li>
+                );
+              })}
             </ol>
           )}
         </div>
