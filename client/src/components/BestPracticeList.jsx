@@ -2,15 +2,15 @@
 const typeIcons = {
   "Gestion des emails": "/icons/gestionEmails.png",
   "Réactivité et déconnexion": "/icons/reactivite.png",
-  "Congés numériques": "/icons/deconnexion.png",
+  "Droit à la déconnexion": "/icons/deconnexion.png",
   "Communication multi-canaux": "/icons/commMultiCanaux.png",
-  "Tchat et messagerie instantanée": "/icons/messInstantanee.png",
+  "Messagerie instantanée": "/icons/messInstantanee.png",
   "Travail collaboratif sur fichiers": "/icons/travailco_fichiers.png",
-  "Réunions : Concentration et disponibilité": "/icons/concentration&dispo.png",
+  "Concentration et disponibilité": "/icons/concentration&dispo.png",
   "Organisation des réunions": "/icons/orgaReu.png",
-  "Lutte contre le multi-tâches": "/icons/multiTaches.png",
+  "Lutter contre le multi-tâches": "/icons/multiTaches.png",
   "Management et exemplarité": "/icons/management.png",
-  "Pratiques vis-à-vis de l'environnement personnel": "/icons/envPerso.png",
+  "Environnement personnel": "/icons/envPerso.png",
 };
 import React, { useState, useEffect } from 'react';
 

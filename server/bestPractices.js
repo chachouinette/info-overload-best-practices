@@ -23,8 +23,8 @@ const bestPractices = [
   { id: 19, type: "Réactivité et déconnexion", description: "Ne pas consulter ses messages sur le temps personnel" },
 
   // Congés numériques
-  { id: 20, type: "Congés numériques", description: "Prévoir dans son agenda un créneau de décollage pour préparer son départ en congés, et d'atterrissage au retour" },
-  { id: 21, type: "Congés numériques", description: "Partager sa stratégie de déconnexion dans sa signature d'email pour en informer ses destinataires" },
+  { id: 20, type: "Droit à la déconnexion", description: "Prévoir dans son agenda un créneau de décollage pour préparer son départ en congés, et d'atterrissage au retour" },
+  { id: 21, type: "Droit à la déconnexion", description: "Partager sa stratégie de déconnexion dans sa signature d'email pour en informer ses destinataires" },
 
   // Communication multi-canaux
   { id: 22, type: "Communication multi-canaux", description: "Définir une charte dans son équipe, qui précise pour chaque canal : le type d'informations partagées, le ton utilisé, les horaires, le délai de réponse attendu, le caractère synchrone ou non des échanges" },
@@ -32,8 +32,8 @@ const bestPractices = [
   { id: 24, type: "Communication multi-canaux", description: "Décrocher son téléphone au-delà de 3 emails (en one-to-one)" },
 
   // Tchat et messagerie instantanée
-  { id: 25, type: "Tchat et messagerie instantanée", description: "Adopter le tchat comme un canal de 'flux' : ne pas y stocker des éléments indispensables d'un projet au long terme" },
-  { id: 26, type: "Tchat et messagerie instantanée", description: "Définir des plages de disponibilités pour éviter les interruptions permanentes" },
+  { id: 25, type: "Messagerie instantanée", description: "Adopter le tchat comme un canal de 'flux' : ne pas y stocker des éléments indispensables d'un projet au long terme" },
+  { id: 26, type: "Messagerie instantanée", description: "Définir des plages de disponibilités pour éviter les interruptions permanentes" },
 
   // Travail collaboratif sur fichiers
   { id: 27, type: "Travail collaboratif sur fichiers", description: "Travailler sur fichier collaboratif (pour éviter le versionning)" },
@@ -46,12 +46,12 @@ const bestPractices = [
   { id: 34, type: "Travail collaboratif sur fichiers", description: "Compresser les fichiers/les pièces jointes" },
 
   // Réunions : Concentration et disponibilité
-  { id: 35, type: "Réunions : Concentration et disponibilité", description: "Bloquer des plages protégées de travail dans son agenda et les rendre visibles" },
-  { id: 36, type: "Réunions : Concentration et disponibilité", description: "Mettre en place une routine de gestion des emails avec des créneaux dédiés" },
-  { id: 37, type: "Réunions : Concentration et disponibilité", description: "Réduire le volume de réunions pour libérer un temps suffisant de traitement de l'information" },
-  { id: 38, type: "Réunions : Concentration et disponibilité", description: "Mettre son mobile en mode silencieux" },
-  { id: 39, type: "Réunions : Concentration et disponibilité", description: "Éteindre sa fenêtre Internet et son téléphone" },
-  { id: 40, type: "Réunions : Concentration et disponibilité", description: "Sacraliser la pause déjeuner" },
+  { id: 35, type: "Concentration et disponibilité", description: "Bloquer des plages protégées de travail dans son agenda et les rendre visibles" },
+  { id: 36, type: "Concentration et disponibilité", description: "Mettre en place une routine de gestion des emails avec des créneaux dédiés" },
+  { id: 37, type: "Concentration et disponibilité", description: "Réduire le volume de réunions pour libérer un temps suffisant de traitement de l'information" },
+  { id: 38, type: "Concentration et disponibilité", description: "Mettre son mobile en mode silencieux" },
+  { id: 39, type: "Concentration et disponibilité", description: "Éteindre sa fenêtre Internet et son téléphone" },
+  { id: 40, type: "Concentration et disponibilité", description: "Sacraliser la pause déjeuner" },
 
   // Organisation des réunions
   { id: 41, type: "Organisation des réunions", description: "Mettre en place un délai minimal de prévenance pour organiser une réunion" },
@@ -64,10 +64,10 @@ const bestPractices = [
   { id: 48, type: "Organisation des réunions", description: "Utiliser la méthode ROTI (Return On Time Invested)" },
 
   // Lutte contre le multi-tâches
-  { id: 49, type: "Lutte contre le multi-tâches", description: "Prévoir des 'pauses emails' pendant les réunions toutes les 90 minutes" },
-  { id: 50, type: "Lutte contre le multi-tâches", description: "Formaliser un 'contrat de concentration' avec ses collègues : des réunions plus courtes en échange d'une interdiction d'utiliser les ordinateurs et smartphones" },
-  { id: 51, type: "Lutte contre le multi-tâches", description: "Stimuler l'engagement des collègues : plus d'interactions, moins de personnes, plus court" },
-  { id: 52, type: "Lutte contre le multi-tâches", description: "Déposer son téléphone en début de réunion dans une boîte collective" },
+  { id: 49, type: "Lutter contre le multi-tâches", description: "Prévoir des 'pauses emails' pendant les réunions toutes les 90 minutes" },
+  { id: 50, type: "Lutter contre le multi-tâches", description: "Formaliser un 'contrat de concentration' avec ses collègues : des réunions plus courtes en échange d'une interdiction d'utiliser les ordinateurs et smartphones" },
+  { id: 51, type: "Lutter contre le multi-tâches", description: "Stimuler l'engagement des collègues : plus d'interactions, moins de personnes, plus court" },
+  { id: 52, type: "Lutter contre le multi-tâches", description: "Déposer son téléphone en début de réunion dans une boîte collective" },
 
   // Management et exemplarité
   { id: 53, type: "Management et exemplarité", description: "Mettre en place de la reconnaissance managériale autrement que par email" },
@@ -78,9 +78,9 @@ const bestPractices = [
   { id: 58, type: "Management et exemplarité", description: "Adopter de bonnes pratiques pour soutenir activement les collaborateurs" },
 
   // Pratiques vis-à-vis de l'environnement personnel
-  { id: 59, type: "Pratiques vis-à-vis de l'environnement personnel", description: "Séparer le téléphone professionnel du personnel" },
-  { id: 60, type: "Pratiques vis-à-vis de l'environnement personnel", description: "Négocier avec son entourage pour ne pas être dérangé pendant le temps de travail" },
-  { id: 61, type: "Pratiques vis-à-vis de l'environnement personnel", description: "Ne pas répondre aux sollicitations personnelles sur le temps de travail (sauf urgences)" },
+  { id: 59, type: "Environnement personnel", description: "Séparer le téléphone professionnel du personnel" },
+  { id: 60, type: "Environnement personnel", description: "Négocier avec son entourage pour ne pas être dérangé pendant le temps de travail" },
+  { id: 61, type: "Environnement personnel", description: "Ne pas répondre aux sollicitations personnelles sur le temps de travail (sauf urgences)" },
 ];
 
 module.exports = { bestPractices };
