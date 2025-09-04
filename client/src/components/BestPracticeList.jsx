@@ -132,8 +132,17 @@ function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices =
                 >
                   {isFavorite ? '★' : '☆'}
                 </span>
-                <span style={{fontSize: '0.9em', color: '#555', fontStyle: 'italic', marginTop: 8, display: 'block'}}>{practice.type}</span>
-                <div style={{marginTop: 12, display: 'flex', gap: 8, flexWrap: 'wrap'}}>
+                <span style={{fontSize: '0.9em', color: '#555', fontStyle: 'italic', marginTop: 8, display: 'block', marginBottom: '32px'}}>{practice.type}</span>
+                <div style={{
+                  display: 'flex',
+                  gap: 8,
+                  flexWrap: 'wrap',
+                  justifyContent: 'flex-end',
+                  position: 'absolute',
+                  right: 16,
+                  bottom: 16,
+                  zIndex: 2,
+                }}>
                   {/* Ajouter à mes 3 pratiques */}
                   <button
                     onClick={() => onSelectPractice(id)}
@@ -150,7 +159,7 @@ function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices =
                     }}
                     aria-label={isSelected ? 'Déjà dans mes pratiques' : 'Ajouter à mes pratiques'}
                   >
-                    {isSelected ? 'Dans mes 3 pratiques' : isAdopted ? 'Déjà adoptée' : 'Ajouter à mes 3 pratiques'}
+                    {isSelected ? 'Dans mes 3 pratiques' : isAdopted ? 'Déjà adoptée' : 'À adopter'}
                   </button>
                   {/* Adopter */}
                   <button
@@ -168,7 +177,7 @@ function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices =
                     }}
                     aria-label={isAdopted ? 'Déjà adoptée' : 'Adopter'}
                   >
-                    {isAdopted ? 'Déjà adoptée' : 'Adopter'}
+                    {isAdopted ? 'Adoptée' : 'Adoptée'}
                   </button>
                 </div>
               </div>
