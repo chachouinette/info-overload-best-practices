@@ -1,38 +1,16 @@
-// Icônes SVG par type de bonne pratique
+// Icônes images par type de bonne pratique
 const typeIcons = {
-  "Gestion des emails": (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#e3eaf3"/><path d="M4 7l8 5 8-5" stroke="#003366" strokeWidth="2" fill="none"/><rect x="4" y="7" width="16" height="10" rx="2" stroke="#003366" strokeWidth="2" fill="none"/></svg>
-  ),
-  "Réactivité et déconnexion": (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#003366" strokeWidth="2" fill="#ffe066"/><path d="M12 6v6l4 2" stroke="#003366" strokeWidth="2" fill="none"/></svg>
-  ),
-  "Congés numériques": (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#e3f3e8"/><path d="M4 18l8-12 8 12" stroke="#008000" strokeWidth="2" fill="none"/></svg>
-  ),
-  "Communication multi-canaux": (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#f9f9f9"/><ellipse cx="12" cy="12" rx="8" ry="5" stroke="#003366" strokeWidth="2" fill="none"/><ellipse cx="12" cy="12" rx="4" ry="2.5" stroke="#003366" strokeWidth="2" fill="none"/></svg>
-  ),
-  "Tchat et messagerie instantanée": (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#fff8e1"/><rect x="5" y="7" width="14" height="8" rx="2" stroke="#ffcc00" strokeWidth="2" fill="none"/><circle cx="8" cy="11" r="1" fill="#ffcc00"/><circle cx="12" cy="11" r="1" fill="#ffcc00"/><circle cx="16" cy="11" r="1" fill="#ffcc00"/></svg>
-  ),
-  "Travail collaboratif sur fichiers": (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#e3eaf3"/><rect x="6" y="7" width="12" height="10" rx="2" stroke="#003366" strokeWidth="2" fill="none"/><path d="M10 11h4" stroke="#003366" strokeWidth="2"/></svg>
-  ),
-  "Réunions : Concentration et disponibilité": (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#008000" strokeWidth="2" fill="#e3f3e8"/><path d="M8 12h8" stroke="#008000" strokeWidth="2"/></svg>
-  ),
-  "Organisation des réunions": (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#ffe066"/><rect x="6" y="7" width="12" height="10" rx="2" stroke="#003366" strokeWidth="2" fill="none"/><path d="M9 11h6" stroke="#003366" strokeWidth="2"/></svg>
-  ),
-  "Lutte contre le multi-tâches": (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#f9f9f9"/><path d="M6 12h12" stroke="#003366" strokeWidth="2"/><path d="M12 6v12" stroke="#003366" strokeWidth="2"/></svg>
-  ),
-  "Management et exemplarité": (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#003366" strokeWidth="2" fill="#e3eaf3"/><rect x="6" y="14" width="12" height="6" rx="3" stroke="#003366" strokeWidth="2" fill="#e3eaf3"/></svg>
-  ),
-  "Pratiques vis-à-vis de l'environnement personnel": (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="4" fill="#e3f3e8"/><path d="M6 18V8l6-4 6 4v10" stroke="#008000" strokeWidth="2" fill="none"/></svg>
-  ),
+  "Gestion des emails": "/icons/gestionEmails.png",
+  "Réactivité et déconnexion": "/icons/reactivite.png",
+  "Congés numériques": "/icons/deconnexion.png",
+  "Communication multi-canaux": "/icons/commMultiCanaux.png",
+  "Tchat et messagerie instantanée": "/icons/messInstantanee.png",
+  "Travail collaboratif sur fichiers": "/icons/travailco_fichiers.png",
+  "Réunions : Concentration et disponibilité": "/icons/concentration&dispo.png",
+  "Organisation des réunions": "/icons/orgaReu.png",
+  "Lutte contre le multi-tâches": "/icons/multiTaches.png",
+  "Management et exemplarité": "/icons/management.png",
+  "Pratiques vis-à-vis de l'environnement personnel": "/icons/envPerso.png",
 };
 import React, { useState, useEffect } from 'react';
 
@@ -133,7 +111,9 @@ function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices =
                 }}
               >
                 <div style={{display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8}}>
-                  <span>{typeIcons[practice.type] || null}</span>
+                  {typeIcons[practice.type] && (
+                    <img src={typeIcons[practice.type]} alt={practice.type} style={{ width: 28, height: 28, objectFit: 'contain', marginRight: 4 }} />
+                  )}
                   <h2 style={{fontSize: '1.1em', margin: 0}}>{practice.title}</h2>
                 </div>
                 {practice.description && <p style={{fontSize: '1em'}}>{practice.description}</p>}
