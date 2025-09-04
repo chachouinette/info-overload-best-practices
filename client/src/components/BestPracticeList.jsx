@@ -83,7 +83,7 @@ function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices =
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Rechercher une pratique..."
-            style={{padding: '8px', borderRadius: '6px', border: '1px solid #ccc', minWidth: '200px'}}
+                    // fontWeight supprimé pour éviter le gras
           />
         </div>
         <button onClick={() => setShowOnlyFavorites(fav => !fav)} style={{padding: '8px 12px', borderRadius: '6px', border: '1px solid #ccc', background: showOnlyFavorites ? '#ffe066' : '#f9f9f9', cursor: 'pointer'}}>
@@ -103,11 +103,14 @@ function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices =
               <div
                 key={id}
                 style={{
-                  border: isFavorite ? '2px solid #ffcc00' : '1px solid #ccc',
-                  borderRadius: '8px',
-                  background: isSelected ? '#ffe066' : isFavorite ? '#fff8e1' : '#f9f9f9',
+                  border: isFavorite ? '2px solid #2196f3' : '1px solid #e0e0e0',
+                  borderRadius: '12px',
+                  background: isSelected ? '#e3f2fd' : isFavorite ? '#f5faff' : '#fff',
+                  color: isSelected ? '#1565c0' : '#222',
+                  boxShadow: '0 2px 8px rgba(33, 150, 243, 0.07)',
                   padding: '16px',
                   position: 'relative',
+                  transition: 'background 0.2s, box-shadow 0.2s',
                 }}
               >
                 <div style={{display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8}}>
@@ -124,15 +127,25 @@ function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices =
                   style={{
                     cursor: 'pointer',
                     fontSize: '1.5em',
-                    color: isFavorite ? '#ffcc00' : '#ccc',
+                    color: isFavorite ? '#0057b8' : '#888',
                     position: 'absolute',
                     top: 8,
                     right: 8,
+                    textShadow: '0 1px 2px #fff',
                   }}
                 >
                   {isFavorite ? '★' : '☆'}
                 </span>
-                <span style={{fontSize: '0.9em', color: '#555', fontStyle: 'italic', marginTop: 8, display: 'block', marginBottom: '32px'}}>{practice.type}</span>
+                  <span style={{
+                    fontSize: '0.85em',
+                    color: isSelected ? '#1565c0' : '#444',
+                    fontStyle: 'italic',
+                    marginTop: 8,
+                    display: 'block',
+                    marginBottom: '32px',
+                    textShadow: isSelected ? '0 1px 2px #e3f2fd' : 'none',
+                    letterSpacing: '0.01em',
+                  }}>{practice.type}</span>
                 <div style={{
                   display: 'flex',
                   gap: 8,
@@ -148,14 +161,16 @@ function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices =
                     onClick={() => onSelectPractice(id)}
                     disabled={isSelected || selectedPractices.length >= maxSelected || isAdopted}
                     style={{
-                      background: isSelected ? '#003366' : '#e3eaf3',
-                      color: isSelected ? '#fff' : '#003366',
+                      background: isSelected ? '#2196f3' : '#f5faff',
+                      color: isSelected ? '#fff' : '#1565c0',
+                      fontWeight: 'normal',
                       border: 'none',
                       borderRadius: '6px',
                       padding: '4px 10px',
-                      fontSize: '0.95em',
+                      fontSize: '0.85em',
                       cursor: isSelected || selectedPractices.length >= maxSelected || isAdopted ? 'not-allowed' : 'pointer',
                       opacity: isSelected || selectedPractices.length >= maxSelected || isAdopted ? 0.6 : 1,
+                      fontWeight: 'bold',
                     }}
                     aria-label={isSelected ? 'Déjà dans mes pratiques' : 'Ajouter à mes pratiques'}
                   >
@@ -166,14 +181,16 @@ function BestPracticeList({ onSelectPractice, selectedPractices, bestPractices =
                     onClick={() => adoptPractice(id)}
                     disabled={isAdopted}
                     style={{
-                      background: isAdopted ? '#008000' : '#e3f3e8',
-                      color: isAdopted ? '#fff' : '#008000',
+                      background: isAdopted ? '#1565c0' : '#f5faff',
+                      color: isAdopted ? '#fff' : '#1565c0',
+                      fontWeight: 'normal',
                       border: 'none',
                       borderRadius: '6px',
                       padding: '4px 10px',
-                      fontSize: '0.95em',
+                      fontSize: '0.85em',
                       cursor: isAdopted ? 'not-allowed' : 'pointer',
                       opacity: isAdopted ? 0.6 : 1,
+                      fontWeight: 'bold',
                     }}
                     aria-label={isAdopted ? 'Déjà adoptée' : 'Adopter'}
                   >
