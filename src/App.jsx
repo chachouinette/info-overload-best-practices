@@ -2,6 +2,7 @@
 import React from 'react';
 import './App.css';
 import BestPracticeList from './components/BestPracticeList';
+import bestPracticesData from './data/bestPractices';
 
 
 import { useState, useEffect } from 'react';
@@ -20,19 +21,8 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/best-practices')
-      .then(res => {
-        if (!res.ok) throw new Error('Erreur lors du chargement des données');
-        return res.json();
-      })
-      .then(data => {
-        setBestPractices(data);
+        setBestPractices(bestPracticesData);
         setLoading(false);
-      })
-      .catch(err => {
-        setError(err.message);
-        setLoading(false);
-      });
   }, []);
 
   // Ajoute ou retire une pratique de la sélection (max 3)

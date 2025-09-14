@@ -83,4 +83,4 @@ const bestPractices = [
   { id: 61, type: "Environnement personnel", description: "Ne pas répondre aux sollicitations personnelles sur le temps de travail (sauf urgences)" },
 ];
 
-module.exports = { bestPractices };
+export default bestPractices;
