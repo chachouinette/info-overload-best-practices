@@ -23,10 +23,10 @@ jobs:
         working-directory: ./client
         run: npm install
 
-      - name: Build React app
-        working-directory: ./client
-        run: npm run build
-
       - name: Install server dependencies
         working-directory: ./server
         run: npm install
+
+      - name: Build app
+        working-directory: ./server
+        run: npm run build
