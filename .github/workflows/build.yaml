@@ -1,0 +1,32 @@
+name: Build React and Prepare Node.js
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "22"
+
+      - name: Install client dependencies
+        working-directory: ./client
+        run: npm install
+
+      - name: Build React app
+        working-directory: ./client
+        run: npm run build
+
+      - name: Install server dependencies
+        working-directory: ./server
+        run: npm install
